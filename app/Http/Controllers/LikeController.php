@@ -11,11 +11,6 @@ use Illuminate\Support\Facades\Notification;
 
 class LikeController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth:pengguna');
-    }
-
     /**
      * Like/unlike komentar via AJAX.
      */

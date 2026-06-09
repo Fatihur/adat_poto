@@ -48,7 +48,7 @@ Route::post('/logout-pengguna', [\App\Http\Controllers\Auth\GoogleLoginControlle
 | Like Komentar (AJAX, wajib login)
 |--------------------------------------------------------------------------
 */
-Route::post('/like/{komentar}', [\App\Http\Controllers\LikeController::class, 'toggle'])->name('komentar.like');
+Route::post('/like/{komentar}', [\App\Http\Controllers\LikeController::class, 'toggle'])->name('komentar.like')->middleware('auth:pengguna');
 
 /*
 |--------------------------------------------------------------------------
