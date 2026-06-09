@@ -25,6 +25,8 @@ class AppServiceProvider extends ServiceProvider
             'user' => \App\Models\User::class,
             'informasi_adat' => \App\Models\InformasiAdat::class,
             'kegiatan_adat' => \App\Models\KegiatanAdat::class,
+            'komentar' => \App\Models\Komentar::class,
+            'like' => \App\Models\Like::class,
         ]);
     }
 }
