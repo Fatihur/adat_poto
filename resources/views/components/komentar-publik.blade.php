@@ -186,8 +186,23 @@
                 'Content-Type': 'application/json',
             }
         })
-        .then(r => r.json())
+        .then(async r => {
+            if (!r.ok) {
+                if (r.status === 401) {
+                    window.location.href = '{{ route('google.login') }}';
+                    return null;
+                }
+                if (r.status === 419) {
+                    alert('Sesi telah habis. Silakan muat ulang halaman.');
+                    return null;
+                }
+                const text = await r.text();
+                throw new Error(text);
+            }
+            return r.json();
+        })
         .then(data => {
+            if (!data) return;
             const svg = btn.querySelector('svg');
             const count = btn.querySelector('.like-count');
             if (data.liked) {
@@ -202,7 +217,7 @@
             count.textContent = data.total;
         })
         .catch(() => {
-            alert('Silakan login untuk memberi like.');
+            alert('Terjadi kesalahan. Silakan coba lagi.');
         });
     }
 </script>
