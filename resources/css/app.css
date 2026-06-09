@@ -1,0 +1,398 @@
+@import 'tailwindcss';
+@plugin '@tailwindcss/typography';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../views/**/*.blade.php';
+
+@theme {
+    --font-sans: 'Open Sans', ui-sans-serif, system-ui, sans-serif;
+    --font-heading: 'Roboto', ui-sans-serif, system-ui, sans-serif;
+    --color-woody: #AB7442;
+    --color-woody-light: #F5F5F5;
+    --color-woody-dark: #353535;
+}
+
+@layer base {
+    html { scroll-behavior: smooth; }
+    body {
+        font-family: var(--font-sans);
+        font-weight: 400;
+        @apply text-stone-600;
+    }
+    h1, h2, h3, h4, h5, h6 {
+        font-family: var(--font-heading);
+        font-weight: 700;
+    }
+    ::selection { @apply bg-[#AB7442]/30 text-white; }
+    :focus-visible { @apply outline-2 outline-offset-2 outline-[#AB7442]; }
+}
+
+@layer components {
+    /* Woody Buttons */
+    .btn-woody {
+        font-weight: 500;
+        transition: .5s;
+        @apply inline-flex items-center justify-center gap-2 bg-[#AB7442] text-white;
+    }
+    .btn-woody:hover {
+        @apply bg-[#8B5E34];
+    }
+    .btn-woody-light {
+        font-weight: 500;
+        transition: .5s;
+        @apply inline-flex items-center justify-center gap-2 bg-white text-stone-700;
+    }
+    .btn-woody-light:hover {
+        @apply bg-stone-100;
+    }
+    .btn-woody-outline {
+        font-weight: 500;
+        transition: .5s;
+        @apply inline-flex items-center justify-center gap-2 border border-[#AB7442] text-[#AB7442];
+    }
+    .btn-woody-outline:hover {
+        @apply bg-[#AB7442] text-white;
+    }
+    .btn-woody-link {
+        @apply text-stone-600 hover:text-[#AB7442] transition;
+    }
+    .btn-square {
+        @apply inline-flex items-center justify-center w-[38px] h-[38px] p-0;
+    }
+    .btn-sm-square {
+        @apply inline-flex items-center justify-center w-[32px] h-[32px] p-0;
+    }
+    .btn-lg-square {
+        @apply inline-flex items-center justify-center w-[48px] h-[48px] p-0;
+    }
+
+    /* Section Title - Woody style */
+    .section-title h1 {
+        position: relative;
+        display: inline-block;
+        padding: 0 30px;
+    }
+    @media (min-width: 640px) {
+        .section-title h1 {
+            padding: 0 60px;
+        }
+    }
+    .section-title.text-start h1 {
+        padding-left: 0;
+    }
+    .section-title h1::before,
+    .section-title h1::after {
+        position: absolute;
+        content: "";
+        width: 45px;
+        height: 5px;
+        bottom: 0;
+        background: var(--color-woody-dark);
+    }
+    .section-title h1::before {
+        left: 0;
+    }
+    .section-title h1::after {
+        right: 0;
+    }
+    .section-title.text-start h1::before {
+        display: none;
+    }
+
+    /* Service Card - Woody style */
+    .service-item {
+        @apply bg-white;
+    }
+    .service-item .overflow-hidden img {
+        transition: .5s;
+    }
+    .service-item:hover .overflow-hidden img {
+        transform: scale(1.1);
+    }
+    .service-item .border-woody-light {
+        border: 5px solid var(--color-woody-light);
+        border-top: none;
+    }
+
+    /* Team Card - Woody style */
+    .team-item img {
+        transition: .5s;
+    }
+    .team-item:hover img {
+        transform: scale(1.1);
+    }
+    .team-item .team-social {
+        position: absolute;
+        width: 38px;
+        top: 50%;
+        left: -38px;
+        transform: translateY(-50%);
+        display: flex;
+        flex-direction: column;
+        background: #FFFFFF;
+        transition: .5s;
+    }
+    .team-item:hover .team-social {
+        left: 0;
+    }
+    .team-item .team-social .btn {
+        color: var(--color-woody);
+        background: #FFFFFF;
+    }
+    .team-item .team-social .btn:hover {
+        color: #FFFFFF;
+        background: var(--color-woody);
+    }
+    .team-item .border-woody-light {
+        border: 5px solid var(--color-woody-light);
+        border-top: none;
+    }
+
+    /* Portfolio - Woody style */
+    .portfolio-item img {
+        transition: .5s;
+    }
+    .portfolio-item:hover img {
+        transform: scale(1.1);
+    }
+    .portfolio-item .portfolio-overlay {
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 0;
+        height: 0;
+        bottom: 0;
+        left: 50%;
+        background: rgba(53, 53, 53, .7);
+        transition: .5s;
+    }
+    .portfolio-item:hover .portfolio-overlay {
+        width: 100%;
+        height: 100%;
+        left: 0;
+    }
+    .portfolio-item .portfolio-overlay .btn {
+        opacity: 0;
+    }
+    .portfolio-item:hover .portfolio-overlay .btn {
+        opacity: 1;
+    }
+
+    /* Admin Button Classes */
+    .btn-primary {
+        @apply inline-flex items-center justify-center gap-2 rounded-lg bg-[#AB7442] px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-[#8B5E34] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#AB7442] focus-visible:ring-offset-2;
+    }
+    .btn-outline {
+        @apply inline-flex items-center justify-center gap-2 rounded-lg border border-stone-300 bg-white px-5 py-2.5 text-sm font-medium text-stone-700 shadow-sm transition hover:bg-stone-50 hover:border-stone-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-400 focus-visible:ring-offset-2;
+    }
+    .btn-ghost {
+        @apply inline-flex items-center justify-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium text-[#AB7442] transition hover:bg-[#AB7442]/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#AB7442];
+    }
+    .btn-danger {
+        @apply inline-flex items-center justify-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium text-red-600 transition hover:bg-red-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500;
+    }
+
+    /* Admin Form Classes */
+    .label {
+        @apply block text-sm font-medium text-stone-700;
+    }
+    .input {
+        @apply block w-full rounded-lg border border-stone-300 bg-white px-4 py-2.5 text-sm text-stone-900 shadow-sm transition placeholder:text-stone-400 focus:border-[#AB7442] focus:outline-none focus:ring-2 focus:ring-[#AB7442]/30;
+    }
+    textarea.input {
+        @apply min-h-[100px];
+    }
+    .select {
+        @apply block w-full rounded-lg border border-stone-300 bg-white px-4 py-2.5 text-sm text-stone-900 shadow-sm transition focus:border-[#AB7442] focus:outline-none focus:ring-2 focus:ring-[#AB7442]/30;
+    }
+
+    /* Form Controls - Woody style */
+    .form-control-woody {
+        @apply w-full border-0 px-4;
+        height: 55px;
+    }
+    .form-control-woody:focus {
+        @apply outline-none ring-2 ring-[#AB7442]/30;
+    }
+    textarea.form-control-woody {
+        height: auto;
+        @apply py-3;
+    }
+
+    /* Page Header */
+    .page-header-woody {
+        background: linear-gradient(rgba(53, 53, 53, .7), rgba(53, 53, 53, .7)), url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImciIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSA2MCAwIEwgMCAwIDAgNjAiIGZpbGw9Im5vbmUiIHN0cm9rZT0icmdiYSgyNTUsMjU1LDI1NSwwLjAzKSIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2cpIi8+PC9zdmc+');
+        background-size: cover, cover;
+        background-position: center, center;
+    }
+
+    /* Footer - Woody style */
+    .footer-woody .btn-social {
+        @apply inline-flex items-center justify-center;
+        width: 35px;
+        height: 35px;
+        margin-right: 5px;
+        color: var(--color-woody-light);
+        border: 1px solid #FFFFFF;
+        transition: .3s;
+    }
+    .footer-woody .btn-social:hover {
+        color: var(--color-woody);
+    }
+    .footer-woody .btn-link {
+        display: block;
+        margin-bottom: 5px;
+        padding: 0;
+        text-align: left;
+        color: #FFFFFF;
+        font-size: 15px;
+        font-weight: normal;
+        text-transform: capitalize;
+        transition: .3s;
+    }
+    .footer-woody .btn-link:hover {
+        color: var(--color-woody);
+        letter-spacing: 1px;
+        box-shadow: none;
+    }
+    .footer-woody .copyright {
+        padding: 25px 0;
+        border-top: 1px solid rgba(256, 256, 256, .1);
+    }
+    .footer-woody .copyright a {
+        color: var(--color-woody-light);
+    }
+    .footer-woody .copyright a:hover {
+        color: var(--color-woody);
+    }
+
+    /* Filter Tags - Woody style */
+    #portfolio-flters li {
+        display: inline-block;
+        font-weight: 500;
+        color: var(--color-woody-dark);
+        cursor: pointer;
+        transition: .5s;
+        border-bottom: 2px solid transparent;
+    }
+    #portfolio-flters li:hover,
+    #portfolio-flters li.active {
+        color: var(--color-woody);
+        border-color: var(--color-woody);
+    }
+}
+
+/* Tree Structure */
+.tree-connector {
+    width: 2px;
+    height: 32px;
+    background: rgba(171, 116, 66, 0.3);
+}
+.tree-connector-h {
+    height: 2px;
+    background: rgba(171, 116, 66, 0.3);
+}
+.tree-node-v {
+    width: 2px;
+    height: 20px;
+    background: rgba(171, 116, 66, 0.3);
+}
+@media (max-width: 639px) {
+    .tree-connector,
+    .tree-connector-h,
+    .tree-node-v { display: none; }
+}
+
+[x-cloak] { display: none !important; }
+
+/* Quill Editor styling */
+.quill-editor {
+    @apply bg-white rounded-lg;
+    min-height: 250px;
+}
+.quill-editor .ql-container {
+    min-height: 180px;
+    font-family: inherit;
+    font-size: 0.95rem;
+}
+.quill-editor .ql-editor {
+    min-height: 180px;
+}
+.quill-editor .ql-toolbar {
+    @apply border-stone-200 rounded-t-lg;
+}
+.quill-editor .ql-container {
+    @apply border-stone-200 rounded-b-lg;
+}
+
+/* DataTables v2 overrides for admin theme */
+div.dt-container {
+    @apply w-full;
+}
+div.dt-container div.dt-layout-row:not(.dt-layout-table) {
+    @apply flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 px-4 py-3;
+}
+div.dt-container div.dt-layout-row:not(.dt-layout-table) div.dt-layout-cell {
+    @apply flex items-center gap-3 flex-wrap;
+}
+div.dt-container div.dt-layout-row:not(.dt-layout-table) div.dt-layout-cell.dt-layout-start {
+    @apply justify-start;
+}
+div.dt-container div.dt-layout-row:not(.dt-layout-table) div.dt-layout-cell.dt-layout-end {
+    @apply justify-end;
+}
+div.dt-container div.dt-layout-row:not(.dt-layout-table) div.dt-layout-cell > * {
+    @apply m-0;
+}
+div.dt-container .dt-search label {
+    @apply text-sm text-stone-600;
+}
+div.dt-container .dt-search input {
+    @apply border border-stone-300 rounded-lg px-3 py-1.5 text-sm outline-none focus:ring-2 focus:ring-[#AB7442]/30 focus:border-[#AB7442];
+}
+div.dt-container .dt-length label {
+    @apply text-sm text-stone-600;
+}
+div.dt-container select.dt-input {
+    @apply border border-stone-300 rounded-lg px-2 py-1.5 text-sm outline-none focus:ring-2 focus:ring-[#AB7442]/30 focus:border-[#AB7442] bg-white;
+}
+div.dt-container .dt-info {
+    @apply text-sm text-stone-500 px-4 pb-3;
+}
+div.dt-container .dt-paging .dt-paging-button {
+    @apply inline-flex items-center justify-center min-w-[32px] h-8 px-2 rounded-lg text-sm font-medium text-stone-600 hover:bg-stone-100 transition border-0 bg-transparent cursor-pointer;
+}
+div.dt-container .dt-paging .dt-paging-button.current,
+div.dt-container .dt-paging .dt-paging-button.current:hover {
+    @apply bg-[#AB7442] text-white;
+}
+div.dt-container .dt-paging .dt-paging-button.disabled,
+div.dt-container .dt-paging .dt-paging-button.disabled:hover {
+    @apply opacity-40 pointer-events-none;
+}
+div.dt-container .dt-paging .dt-paging-button:hover {
+    @apply bg-stone-100 text-stone-800;
+}
+div.dt-container table.dataTable {
+    @apply w-full;
+}
+div.dt-container table.dataTable thead th {
+    @apply border-b-2 border-stone-200 bg-stone-50 text-stone-500 font-medium px-4 py-3 text-left text-sm;
+}
+div.dt-container table.dataTable thead th.dt-orderable-asc,
+div.dt-container table.dataTable thead th.dt-orderable-desc {
+    @apply cursor-pointer;
+}
+div.dt-container table.dataTable thead th.dt-orderable-asc:hover,
+div.dt-container table.dataTable thead th.dt-orderable-desc:hover {
+    @apply bg-stone-100;
+}
+div.dt-container table.dataTable tbody td {
+    @apply px-4 py-3 text-sm;
+}
+div.dt-container table.dataTable tbody tr:hover {
+    @apply bg-stone-50;
+}
+
