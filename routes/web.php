@@ -92,9 +92,8 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
 
     // Kelola Komentar
     Route::get('komentar', [\App\Http\Controllers\Admin\KomentarController::class, 'index'])->name('komentar.index');
-    Route::patch('komentar/{komentar}/setujui', [\App\Http\Controllers\Admin\KomentarController::class, 'setujui'])->name('komentar.setujui');
-    Route::patch('komentar/{komentar}/tolak', [\App\Http\Controllers\Admin\KomentarController::class, 'tolak'])->name('komentar.tolak');
-    Route::delete('komentar/{komentar}', [\App\Http\Controllers\Admin\KomentarController::class, 'hapus'])->name('komentar.hapus');
+    Route::patch('komentar/{komentar}/tampilkan', [\App\Http\Controllers\Admin\KomentarController::class, 'tampilkan'])->name('komentar.tampilkan');
+    Route::patch('komentar/{komentar}/sembunyikan', [\App\Http\Controllers\Admin\KomentarController::class, 'sembunyikan'])->name('komentar.sembunyikan');
 
     // Kelola Notifikasi
     Route::get('notifikasi', [\App\Http\Controllers\Admin\NotifikasiController::class, 'index'])->name('notifikasi.index');

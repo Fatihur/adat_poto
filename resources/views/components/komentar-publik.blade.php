@@ -3,9 +3,9 @@
 @php
     $user = request()->user('pengguna');
     $komentars = $model->rootComments()
-        ->where('status', 'terbit')
+        ->whereIn('status', ['terbit', 'disembunyikan'])
         ->with(['replies' => function ($q) {
-            $q->where('status', 'terbit');
+            $q->whereIn('status', ['terbit', 'disembunyikan']);
         }, 'replies.commenter', 'commenter', 'likes'])
         ->latest()
         ->get();
@@ -102,7 +102,11 @@
                                 <span class="font-medium text-stone-800 text-sm">{{ $komentar->nama_pengirim }}</span>
                                 <span class="text-xs text-stone-400">{{ $komentar->created_at->diffForHumans() }}</span>
                             </div>
-                            <p class="mt-1.5 text-sm text-stone-600 leading-relaxed">{{ $komentar->body }}</p>
+                            @if ($komentar->status === 'disembunyikan')
+                                <p class="mt-1.5 text-sm text-stone-400 italic">Komentar disembunyikan oleh admin</p>
+                            @else
+                                <p class="mt-1.5 text-sm text-stone-600 leading-relaxed">{{ $komentar->body }}</p>
+                            @endif
 
                             <div class="mt-2 flex items-center gap-3">
                                 {{-- Tombol Like --}}
@@ -150,7 +154,11 @@
                                                     <span class="font-medium text-stone-800 text-sm">{{ $reply->nama_pengirim }}</span>
                                                     <span class="text-xs text-stone-400">{{ $reply->created_at->diffForHumans() }}</span>
                                                 </div>
-                                                <p class="mt-1 text-sm text-stone-600 leading-relaxed">{{ $reply->body }}</p>
+                                                @if ($reply->status === 'disembunyikan')
+                                                    <p class="mt-1 text-sm text-stone-400 italic">Komentar disembunyikan oleh admin</p>
+                                                @else
+                                                    <p class="mt-1 text-sm text-stone-600 leading-relaxed">{{ $reply->body }}</p>
+                                                @endif
                                             </div>
                                         </div>
                                     @endforeach

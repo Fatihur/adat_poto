@@ -9,7 +9,7 @@
             <select name="status" class="input w-auto text-sm" onchange="this.form.submit()">
                 <option value="">Semua Status</option>
                 <option value="terbit" {{ request('status') === 'terbit' ? 'selected' : '' }}>Terbit</option>
-                <option value="draf" {{ request('status') === 'draf' ? 'selected' : '' }}>Draf</option>
+                <option value="disembunyikan" {{ request('status') === 'disembunyikan' ? 'selected' : '' }}>Disembunyikan</option>
             </select>
             <div class="relative">
                 <input type="text" name="cari" value="{{ request('cari') }}" placeholder="Cari komentar..."
@@ -38,7 +38,7 @@
                 </thead>
                 <tbody class="divide-y divide-stone-100">
                     @foreach ($daftarKomentar as $komentar)
-                        <tr class="hover:bg-stone-50 transition-colors {{ $komentar->status === 'draf' ? 'bg-amber-50/50' : '' }}">
+                        <tr class="hover:bg-stone-50 transition-colors {{ $komentar->status === 'disembunyikan' ? 'bg-rose-50/50' : '' }}">
                             <td class="px-4 py-3 font-medium text-stone-800 whitespace-nowrap">
                                 <div class="flex items-center gap-2">
                                     @if ($komentar->avatar_pengirim)
@@ -63,29 +63,24 @@
                             </td>
                             <td class="px-4 py-3">
                                 <span class="inline-block rounded-full px-2.5 py-0.5 text-xs font-medium
-                                    {{ $komentar->status === 'terbit' ? 'bg-green-100 text-green-800' : 'bg-amber-100 text-amber-800' }}">
+                                    {{ $komentar->status === 'terbit' ? 'bg-green-100 text-green-800' : 'bg-rose-100 text-rose-700' }}">
                                     {{ $komentar->labelStatus() }}
                                 </span>
                             </td>
                             <td class="px-4 py-3 text-right whitespace-nowrap">
-                                @if ($komentar->status === 'draf')
-                                    <form action="{{ route('admin.komentar.setujui', $komentar) }}" method="POST" class="inline">
+                                @if ($komentar->status === 'disembunyikan')
+                                    <form action="{{ route('admin.komentar.tampilkan', $komentar) }}" method="POST" class="inline">
                                         @csrf
                                         @method('PATCH')
-                                        <button type="submit" class="btn-ghost text-xs">Setujui</button>
+                                        <button type="submit" class="btn-ghost text-xs">Tampilkan</button>
                                     </form>
                                 @else
-                                    <form action="{{ route('admin.komentar.tolak', $komentar) }}" method="POST" class="inline">
+                                    <form action="{{ route('admin.komentar.sembunyikan', $komentar) }}" method="POST" class="inline">
                                         @csrf
                                         @method('PATCH')
-                                        <button type="submit" class="btn-ghost text-xs">Arsipkan</button>
+                                        <button type="submit" class="btn-ghost text-xs text-amber-600 hover:text-amber-800">Sembunyikan</button>
                                     </form>
                                 @endif
-                                <form action="{{ route('admin.komentar.hapus', $komentar) }}" method="POST" class="inline" onsubmit="return confirm('Hapus komentar ini?')">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn-ghost text-xs text-red-600 hover:text-red-800">Hapus</button>
-                                </form>
                             </td>
                         </tr>
                     @endforeach

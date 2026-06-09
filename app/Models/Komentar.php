@@ -88,11 +88,11 @@ class Komentar extends BaseComment
     }
 
     /**
-     * Scope komentar yang masih draf.
+     * Scope komentar yang disembunyikan.
      */
-    public function scopeDraf($query)
+    public function scopeDisembunyikan($query)
     {
-        return $query->where('status', 'draf');
+        return $query->where('status', 'disembunyikan');
     }
 
     /**
@@ -100,6 +100,10 @@ class Komentar extends BaseComment
      */
     public function labelStatus(): string
     {
-        return $this->status === 'terbit' ? 'Terbit' : 'Draf';
+        return match ($this->status) {
+            'terbit' => 'Terbit',
+            'disembunyikan' => 'Disembunyikan',
+            default => 'Unknown',
+        };
     }
 }

@@ -37,32 +37,22 @@ class KomentarController extends Controller
     }
 
     /**
-     * Setujui komentar (ubah status jadi terbit).
+     * Tampilkan komentar (ubah status jadi terbit).
      */
-    public function setujui(Komentar $komentar): RedirectResponse
+    public function tampilkan(Komentar $komentar): RedirectResponse
     {
         $komentar->update(['status' => 'terbit']);
 
-        return back()->with('success', 'Komentar berhasil disetujui.');
+        return back()->with('success', 'Komentar berhasil ditampilkan.');
     }
 
     /**
-     * Tolak / arsipkan komentar (ubah status jadi draf).
+     * Sembunyikan komentar (ubah status jadi disembunyikan).
      */
-    public function tolak(Komentar $komentar): RedirectResponse
+    public function sembunyikan(Komentar $komentar): RedirectResponse
     {
-        $komentar->update(['status' => 'draf']);
+        $komentar->update(['status' => 'disembunyikan']);
 
-        return back()->with('success', 'Komentar berhasil diarsipkan.');
-    }
-
-    /**
-     * Hapus komentar (soft delete).
-     */
-    public function hapus(Komentar $komentar): RedirectResponse
-    {
-        $komentar->delete();
-
-        return back()->with('success', 'Komentar berhasil dihapus.');
+        return back()->with('success', 'Komentar berhasil disembunyikan.');
     }
 }
