@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Galeri;
 use App\Models\InformasiAdat;
 use App\Models\KegiatanAdat;
-use App\Models\PengurusAdat;
+use App\Models\StrukturOrganisasi;
 use App\Models\ProfilDesa;
 use Illuminate\View\View;
 
@@ -17,7 +17,7 @@ class DashboardController extends Controller
         $ringkasan = [
             'profil' => ProfilDesa::count(),
             'informasi' => InformasiAdat::count(),
-            'pengurus' => PengurusAdat::count(),
+            'pengurus' => StrukturOrganisasi::count(),
             'kegiatan' => KegiatanAdat::count(),
             'galeri' => Galeri::count(),
         ];

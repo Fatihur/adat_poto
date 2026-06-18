@@ -6,7 +6,7 @@ use App\Models\Admin;
 use App\Models\Galeri;
 use App\Models\InformasiAdat;
 use App\Models\KegiatanAdat;
-use App\Models\PengurusAdat;
+use App\Models\StrukturOrganisasi;
 use App\Models\ProfilDesa;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -342,7 +342,7 @@ class DatabaseSeeder extends Seeder
         ];
 
         foreach ($pengurus as $item) {
-            PengurusAdat::updateOrCreate(
+            StrukturOrganisasi::updateOrCreate(
                 ['nama' => $item['nama']],
                 collect($item)->only(['jabatan', 'urutan'])->toArray()
             );

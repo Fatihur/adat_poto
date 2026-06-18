@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\PengurusAdat;
+use App\Models\StrukturOrganisasi;
 use Illuminate\View\View;
 
 class StrukturController extends Controller
 {
     public function index(): View
     {
-        $daftarPengurus = PengurusAdat::orderBy('urutan')
+        $daftarPengurus = StrukturOrganisasi::orderBy('urutan')
             ->orderBy('nama')
             ->get();
 

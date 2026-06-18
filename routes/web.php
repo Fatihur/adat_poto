@@ -78,7 +78,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
         ->parameters(['informasi' => 'informasi'])
         ->except('show');
 
-    Route::resource('pengurus', \App\Http\Controllers\Admin\PengurusController::class)
+    Route::resource('pengurus', \App\Http\Controllers\Admin\StrukturController::class)
         ->parameters(['pengurus' => 'penguru'])
         ->except('show');
 

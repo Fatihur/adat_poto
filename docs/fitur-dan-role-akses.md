@@ -56,7 +56,7 @@ Semua relasi polymorphic menggunakan alias (bukan FQCN) via `Relation::enforceMo
 
 ---
 
-## 2. Fitur — Halaman Publik (Semua Pengunjung)
+## 2. Fitur — Halaman Publik (Semua Masyarakat)
 
 ### 2.1. Beranda
 - **Route:** `GET /` → `BerandaController@index`
@@ -303,7 +303,7 @@ Semua relasi polymorphic menggunakan alias (bukan FQCN) via `Relation::enforceMo
 
 ### 5.1. Halaman Publik
 
-| Fitur | Pengunjung (unauthenticated) | User Publik (Google Auth) | Admin |
+| Fitur | Masyarakat (unauthenticated) | User Publik (Google Auth) | Admin |
 |---|---|---|---|
 | Beranda | ✅ Baca | ✅ Baca | ✅ Baca |
 | Profil Desa | ✅ Baca | ✅ Baca | ✅ Baca |

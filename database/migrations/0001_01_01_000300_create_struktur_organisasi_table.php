@@ -7,11 +7,11 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Tabel struktur organisasi / pengurus adat.
+     * Tabel struktur organisasi.
      */
     public function up(): void
     {
-        Schema::create('pengurus_adat', function (Blueprint $table) {
+        Schema::create('struktur_organisasi', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
             $table->string('jabatan');
@@ -22,6 +22,6 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('pengurus_adat');
+        Schema::dropIfExists('struktur_organisasi');
     }
 };
