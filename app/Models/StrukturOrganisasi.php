@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class PengurusAdat extends Model
+class StrukturOrganisasi extends Model
 {
-    protected $table = 'pengurus_adat';
+    protected $table = 'struktur_organisasi';
 
     protected $fillable = [
         'nama',
