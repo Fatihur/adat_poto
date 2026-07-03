@@ -65,7 +65,7 @@
                     </a>
                 @endforeach
                 <a href="{{ route('admin.login') }}" class="btn-woody py-4 px-6 text-sm font-medium uppercase hidden xl:inline-flex ms-3">
-                    Login Admin
+                    Login
                     <svg class="h-4 w-4 ms-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12H4m0 0 3.5-3.5M4 12l3.5 3.5M14 4h4a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-4"/></svg>
                 </a>
             </div>

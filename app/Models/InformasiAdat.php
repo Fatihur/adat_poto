@@ -3,13 +3,10 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Traits\HasLikes;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
-use XLaravel\Commentable\Commentable;
 
 class InformasiAdat extends Model
 {
-    use Commentable;
     protected $table = 'informasi_adat';
 
     protected $fillable = [
@@ -20,11 +17,13 @@ class InformasiAdat extends Model
         'status',
     ];
 
-    /**
-     * Override relasi komentar pakai model Komentar kita.
-     */
     public function comments(): MorphMany
     {
         return $this->morphMany(Komentar::class, 'commentable');
+    }
+
+    public function rootComments(): MorphMany
+    {
+        return $this->comments()->whereNull('parent_id');
     }
 }

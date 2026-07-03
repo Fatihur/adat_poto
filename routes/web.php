@@ -29,26 +29,10 @@ Route::get('/galeri', [GaleriController::class, 'index'])->name('galeri');
 
 /*
 |--------------------------------------------------------------------------
-| Komentar (publik, via AJAX/Form)
+| Komentar (publik, tanpa login)
 |--------------------------------------------------------------------------
 */
 Route::post('/komentar', [\App\Http\Controllers\KomentarController::class, 'store'])->name('komentar.store');
-
-/*
-|--------------------------------------------------------------------------
-| Google Login (Public User)
-|--------------------------------------------------------------------------
-*/
-Route::get('/auth/google', [\App\Http\Controllers\Auth\GoogleLoginController::class, 'redirect'])->name('google.login');
-Route::get('/auth/google/callback', [\App\Http\Controllers\Auth\GoogleLoginController::class, 'callback'])->name('google.callback');
-Route::post('/logout-pengguna', [\App\Http\Controllers\Auth\GoogleLoginController::class, 'logout'])->name('pengguna.logout');
-
-/*
-|--------------------------------------------------------------------------
-| Like Komentar (AJAX, wajib login)
-|--------------------------------------------------------------------------
-*/
-Route::post('/like/{komentar}', [\App\Http\Controllers\LikeController::class, 'toggle'])->name('komentar.like')->middleware('auth:pengguna');
 
 /*
 |--------------------------------------------------------------------------
@@ -90,12 +74,10 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
         ->parameters(['galeri' => 'galeri'])
         ->except('show');
 
-    // Kelola Komentar
     Route::get('komentar', [\App\Http\Controllers\Admin\KomentarController::class, 'index'])->name('komentar.index');
     Route::patch('komentar/{komentar}/tampilkan', [\App\Http\Controllers\Admin\KomentarController::class, 'tampilkan'])->name('komentar.tampilkan');
     Route::patch('komentar/{komentar}/sembunyikan', [\App\Http\Controllers\Admin\KomentarController::class, 'sembunyikan'])->name('komentar.sembunyikan');
 
-    // Kelola Notifikasi
     Route::get('notifikasi', [\App\Http\Controllers\Admin\NotifikasiController::class, 'index'])->name('notifikasi.index');
     Route::get('notifikasi/{notifikasi}/baca', [\App\Http\Controllers\Admin\NotifikasiController::class, 'baca'])->name('notifikasi.baca');
     Route::patch('notifikasi/baca-semua', [\App\Http\Controllers\Admin\NotifikasiController::class, 'bacaSemua'])->name('notifikasi.bacaSemua');

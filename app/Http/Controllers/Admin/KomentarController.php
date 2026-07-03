@@ -10,23 +10,18 @@ use Illuminate\View\View;
 
 class KomentarController extends Controller
 {
-    /**
-     * Tampilkan daftar semua komentar.
-     */
     public function index(Request $request): View
     {
         $query = Komentar::with('commentable');
 
-        // Filter status
         if ($request->filled('status')) {
             $query->where('status', $request->status);
         }
 
-        // Filter pencarian
         if ($request->filled('cari')) {
             $cari = $request->cari;
             $query->where(function ($q) use ($cari) {
-                $q->where('pengirim', 'like', "%{$cari}%")
+                $q->where('nama', 'like', "%{$cari}%")
                   ->orWhere('body', 'like', "%{$cari}%");
             });
         }
@@ -36,9 +31,6 @@ class KomentarController extends Controller
         return view('admin.komentar.index', compact('daftarKomentar'));
     }
 
-    /**
-     * Tampilkan komentar (ubah status jadi terbit).
-     */
     public function tampilkan(Komentar $komentar): RedirectResponse
     {
         $komentar->update(['status' => 'terbit']);
@@ -46,9 +38,6 @@ class KomentarController extends Controller
         return back()->with('success', 'Komentar berhasil ditampilkan.');
     }
 
-    /**
-     * Sembunyikan komentar (ubah status jadi disembunyikan).
-     */
     public function sembunyikan(Komentar $komentar): RedirectResponse
     {
         $komentar->update(['status' => 'disembunyikan']);

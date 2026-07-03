@@ -6,41 +6,32 @@ use App\Models\Komentar;
 use App\Models\Notifikasi;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class KomentarController extends Controller
 {
-    /**
-     * Simpan komentar baru untuk Informasi Adat atau Kegiatan Adat.
-     */
     public function store(Request $request): RedirectResponse
     {
-        // Cek login
-        $user = Auth::guard('pengguna')->user();
-        if (! $user) {
-            return back()->with('error', 'Silakan login dengan Google terlebih dahulu untuk berkomentar.');
-        }
-
         $validated = Validator::make($request->all(), [
             'type' => 'required|in:informasi,kegiatan',
             'id' => 'required|integer',
+            'nama' => 'required|string|max:100',
             'body' => 'required|string|max:2000',
             'parent_id' => 'nullable|integer',
         ], [
+            'nama.required' => 'Nama wajib diisi.',
+            'nama.max' => 'Nama maksimal 100 karakter.',
             'body.required' => 'Komentar wajib diisi.',
             'body.max' => 'Komentar maksimal 2000 karakter.',
         ])->validate();
 
-        // Cari model yang dikomentari
         $model = match ($validated['type']) {
             'informasi' => \App\Models\InformasiAdat::findOrFail($validated['id']),
             'kegiatan' => \App\Models\KegiatanAdat::findOrFail($validated['id']),
         };
 
-        // Validasi parent_id milik model yang sama
         if ($validated['parent_id']) {
-            $parent = Komentar::where('commentable_type', get_class($model))
+            $parent = Komentar::where('commentable_type', $model->getMorphClass())
                 ->where('commentable_id', $model->id)
                 ->find($validated['parent_id']);
 
@@ -49,20 +40,18 @@ class KomentarController extends Controller
             }
         }
 
-        // Buat komentar via trait (dengan user authenticated sebagai commenter)
-        $comment = $model->addComment($validated['body'], $user);
-
-        // Update parent_id untuk reply
-        if ($validated['parent_id']) {
-            $comment->forceFill(['parent_id' => $validated['parent_id']])->save();
-        }
-
-        // Notifikasi untuk admin dashboard
-        $judulKonten = $model->judul;
+        Komentar::create([
+            'commentable_type' => $model->getMorphClass(),
+            'commentable_id' => $model->id,
+            'parent_id' => $validated['parent_id'] ?? null,
+            'nama' => $validated['nama'],
+            'body' => $validated['body'],
+            'status' => 'terbit',
+        ]);
 
         Notifikasi::create([
             'judul' => 'Komentar Baru',
-            'pesan' => "{$user->name} berkomentar pada \"{$judulKonten}\"",
+            'pesan' => "{$validated['nama']} berkomentar pada \"{$model->judul}\"",
             'url' => route('admin.komentar.index'),
             'is_read' => false,
         ]);

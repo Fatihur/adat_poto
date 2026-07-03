@@ -5,12 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
-use XLaravel\Commentable\Commentable;
 
 class KegiatanAdat extends Model
 {
-    use Commentable;
-
     protected $table = 'kegiatan_adat';
 
     protected $fillable = [
@@ -26,9 +23,6 @@ class KegiatanAdat extends Model
         'tanggal_kegiatan' => 'date',
     ];
 
-    /**
-     * Label status untuk ditampilkan ke pengguna.
-     */
     public const STATUS = [
         'akan_datang' => 'Akan Datang',
         'berlangsung' => 'Sedang Berlangsung',
@@ -45,11 +39,13 @@ class KegiatanAdat extends Model
         return $this->hasMany(Galeri::class, 'kegiatan_id');
     }
 
-    /**
-     * Override relasi komentar pakai model Komentar kita.
-     */
     public function comments(): MorphMany
     {
         return $this->morphMany(Komentar::class, 'commentable');
+    }
+
+    public function rootComments(): MorphMany
+    {
+        return $this->comments()->whereNull('parent_id');
     }
 }

@@ -41,9 +41,9 @@
                         <tr class="hover:bg-stone-50 transition-colors {{ $komentar->status === 'disembunyikan' ? 'bg-rose-50/50' : '' }}">
                             <td class="px-4 py-3 font-medium text-stone-800 whitespace-nowrap">
                                 <div class="flex items-center gap-2">
-                                    @if ($komentar->avatar_pengirim)
-                                        <img src="{{ $komentar->avatar_pengirim }}" alt="" class="w-6 h-6 rounded-full">
-                                    @endif
+                                    <span class="inline-flex w-6 h-6 rounded-full bg-[#AB7442]/10 items-center justify-center text-[#AB7442] font-bold text-xs">
+                                        {{ strtoupper(substr($komentar->nama_pengirim, 0, 1)) }}
+                                    </span>
                                     <span>{{ $komentar->nama_pengirim }}</span>
                                 </div>
                             </td>
